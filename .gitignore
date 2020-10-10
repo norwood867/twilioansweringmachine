@@ -8,3 +8,5 @@ try.py
 .env
 .vscode
 .test
+__pycache__
+test.ipynb
