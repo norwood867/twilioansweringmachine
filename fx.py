@@ -16,8 +16,6 @@ create_table = '''CREATE TABLE IF NOT EXISTS reclogs (id INTEGER PRIMARY KEY AUT
 
 client = Client(account_sid, auth_token) # twilio client setup
 
-recordings = client.recordings.list() # get recordings info
-recordings_sids = [e.sid for e in recordings] # get recordings sids
 messages = client.messages.list(from_=phone_cell) # get messages 
 
 conn = sqlite3.connect('recordlist.db') # automatically creates the database if it doesn't exist
@@ -79,7 +77,8 @@ for message in messages:
 
 
 db_rec_id, db_rec_sid = get_from_db_rec() # get db id's and corresponding rec_sids
-
+recordings = client.recordings.list()  # get recordings info
+recordings_sids = [e.sid for e in recordings]  # get recordings sids
 
 for record in set(recordings_sids).difference(set(db_rec_sid)):
     # * compare recording on twilio with record of those in database
